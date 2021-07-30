@@ -103,7 +103,7 @@ body {
   text-transform: capitalize;
   letter-spacing: var(--mainSpacing);
 }
-.products-center {
+.product-center {
   width: 90vw;
   margin: 0 auto;
   max-width: 1170px;
