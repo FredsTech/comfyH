@@ -75,7 +75,7 @@ class UI{
          class="product-img">
         <button class="bag-btn" data-id=${product.id}>
             <i class="fas fa-shopping-cart"></i>
-            add to bag
+            add to cart
         </button>
     </div>
     <h3>${product.title}</h3>
@@ -143,7 +143,7 @@ class UI{
         //  console.log(cartTotal,cartItems); 
      }
 
-// METHOD 4
+// METHOD 4(This is the main cart div)
 // ==================================
   addCartItem(item){
       const div = document.createElement("div");
@@ -174,7 +174,95 @@ cartContent.appendChild(div);
     cartDOM.classList.add("showCart");
 }
 
+
+// METHOD 6(RUNS IMEDIATELY THE WEB APP IS OPENED TO CHECK IF THERE ARE ANY ITEMS IN THE CART)
+// ============================================================================================
+//This is where the main dramas of the cart happen where we set up the cart,
+setupAPP(){
+cart = Storage.getCart(); //Runing the methods that checks it there are any items in the cart and if any it returns them to the cart array. 
+
+this.setCartValues(cart);
+
+this.populateCart(cart);
+
+cartBtn.addEventListener('click',this.showCart);
+ closeCartBtn.addEventListener('click',this.hideCart);
+
 }
+
+// METHOD 7 (METHOD TO ADD ITEMS TO THE CART)
+// =============================================
+
+populateCart(cart){//Looks for an argument of an array
+    cart.forEach(item => this.addCartItem(item));
+}
+
+// METHOD 8(METHOD TO HIDE THE CART )
+// ===================================  
+
+hideCart(){
+     cartOverlay.classList.remove("transparentBcg");
+    cartDOM.classList.remove("showCart");
+
+}
+
+
+// METHOD 9(We set up the cart Logic,where we can remove items.Append Items ,Increase and decrease the numbers etc.)
+// ===================================  
+
+cartLogic(){
+
+//Clear cart Button 
+
+clearCartBtn.addEventListener('click',() => {
+    this.clearCart()
+});//When Set up like this,The keyword this will be referencing the btn but not the ow
+
+f//cart functionality 
+cartContent.addEventListener("click",event => {
+})
+}
+
+
+// METHOD 10
+// =========
+clearCart(){
+    let  cartItems = cart.map((item)=>{
+       return item.id;
+    });
+    cartItems.forEach(id => this.removeItem(id));
+
+    while (cartContent.children.length>0){
+        cartContent.removeChild(cartContent.children[0]);
+    }
+    this.hideCart();
+} 
+
+//These method will require the ID as an argument
+removeItem(id){
+    //We start by filtering the cart inorder to remove the items.
+    //This method gets all the ids and returns those that are not in the filter list....
+    cart = cart.filter(item => item.id  !==id);
+ //Once we have the new car items values we would want to update the cart values maze...and that is where this method comes in 
+    this.setCartValues(cart);//Updated cart
+    Storage.saveCart(cart);//Saving the new cart values.
+    //WE NOW RESET THE BUTTONS OF THE REMOVED ITEMS FROM CART TO NOW READ OTHER THAN.INCART
+
+    let button = this.getSingleButton(id);
+//After running this method to get the methods...
+    button.disabled = false;
+    button.innerHTML = `<i class= "fas fa-shopping-cart"></i> add to cart`;
+
+}
+//GETS THAT INDIVIDUAL BUTTON TO RESET ITS STATUS
+getSingleButton(id){
+    return buttonsDOM.find(button => button.dataset.id === id);
+}
+//WE ARE SETTING UP THIS METHODS IN ORDER TO BE ABLE TO REUSE THEM IN FUTURE.
+
+}
+
+
 
 //LOCAL STORAGE 
 
@@ -195,8 +283,13 @@ class Storage {
     static saveCart(cart){
         localStorage.setItem('cart',JSON.stringify(cart))//Converts the cart object to strings which can be stored in JSON format...
     }
-}
 
+    static getCart(){
+    return localStorage.getItem ('cart')?JSON.parse
+    (localStorage.getItem('cart')):[]
+    }
+}
+ 
 //GEARING THINGS UP//CALLING THE METHODS IN THE CLASSES.(To use the methods in the UI and products class we have to 
 //instantiate the classes just as we have done.) 
 
@@ -204,7 +297,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     //creating instances of the classes to be called
     const ui = new UI();
     const products = new Products();
+//setup app
 
+ui.setupAPP();
 
     //get all products 
     products.getProducts().then((products)=>{
@@ -212,7 +307,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         ui.displayProducts(products);
         Storage.saveProducts(products);
     }).then(()=>{
-ui.getBagButtons()
+ui.getBagButtons();
+ui.cartLogic(); 
     });
 });
 
