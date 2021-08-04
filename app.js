@@ -100,10 +100,10 @@ class UI{
 
 //   console.log(buttonsDOM);//It is an array of 8 buttons since there are 8 products with that class as per now
 
-       buttons.forEach(button=>{
+       buttons.forEach(button => {
            let id = button.dataset.id;
     //Checking if the item is already in the cart and the necessary actions to be taken....
-    let inCart = cart.find(item => item.id === id);//returns either true or false
+    let inCart = cart.find(item => item.id === id);//returns either true or false if the items id matches the buttons dataset id that it represents 
     if(inCart){
      //Actions to be taken (Disable the button and Change text to indicate that the item is already in the cat)
         button.innerText="In Cart";
@@ -129,8 +129,8 @@ class UI{
        });
     }
 
-// METHOD 3
-// ==================================
+// METHOD 3(METHOD FOR GETTING CART TOTALS AND ITEMS TOTALS)
+// ==============================================================
      setCartValues(cart){
          let tempTotal = 0;
          let itemsTotal = 0;
@@ -143,11 +143,11 @@ class UI{
         //  console.log(cartTotal,cartItems); 
      }
 
-// METHOD 4(This is the main cart div)
+// METHOD 4(ADDING CART ITEMS TO THE DOM)
 // ==================================
   addCartItem(item){
       const div = document.createElement("div");
-      div.classList.add("cart-item");
+      div.classList.add("cart-item");//Baptising the new div in town with a class name.
       div.innerHTML = ` 
        <img src=${item.image} alt="product">
                 <div>
@@ -166,8 +166,8 @@ cartContent.appendChild(div);
   }
 
 
-// METHOD 5(SHOW CART)
-// ==================================
+// METHOD 5(SHOW CART WHICH MAINLY DEALS WITH CSS.)
+// ====================================================
   showCart() {
 
     cartOverlay.classList.add("transparentBcg");
@@ -264,8 +264,8 @@ else if (event.target.classList.contains("fa-chevron-down")){
 // METHOD 10
 // =========
 clearCart(){
-    let  cartItems = cart.map((item)=>{
-       return item.id;
+    let  cartItems = cart.map((item)=>{//The new value of the cart item ni id
+       return ( item.id);
     });
     cartItems.forEach(id => this.removeItem(id));
 
@@ -305,12 +305,14 @@ getSingleButton(id){
 
 class Storage {
     static saveProducts(products){
+        console.log(products);
         localStorage.setItem("products",JSON.stringify(products));//serItem methods in local storage is used to store data (strings in key value pairs)
     }
 
     //Getting the product.
     //This method will require and id as the argument,The ID that we are obviously getting from the button.
     static getProduct (id){
+        console.log(id);
         //We need to parse it since we has stored it as a string.
         let products = JSON.parse(localStorage.getItem('products'));//It will gonna require what we are getting from
         return products.find(product => product.id===id);
@@ -334,11 +336,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     //creating instances of the classes to be called
     const ui = new UI();
     const products = new Products();
-//setup app
+    //PROCESS 1.
+//setup app will be the first method to run...
 
 ui.setupAPP();
-
-    //get all products 
+    //PROCESS 2
+    //The products will be fetched and then the rest follows 
     products.getProducts().then((products)=>{
         //We run the methods that is in the UI class
         ui.displayProducts(products);
