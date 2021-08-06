@@ -221,18 +221,20 @@ clearCartBtn.addEventListener('click',() => {
 //cart functionality 
 cartContent.addEventListener("click",event => {
 
-
+//WORKS ON THE REMOVING ITEM BUTTONS WITH THE CLASS REMOVE ITEM.
 if(event.target.classList.contains('remove-item'))
 {
+//ONLY SAVES THAT BUTTON THAT WHEN CLICKED ON HAS THE CLASS OF REMOVE-ITEMS
     let removeItem = event.target;
-    let id = removeItem.dataset.id;
-    cartContent.removeChild
-    (removeItem.parentElement.parentElement);
-    this.removeItem(id);
+    let id = removeItem.dataset.id;//dataset accesses the attributes.
+    cartContent.removeChild(removeItem.parentElement.parentElement);//Removes the item from the cart in the DOM.It moves two parents up inorder to access the whole
+    this.removeItem(id);//Removes the items from the cart in the local storage 
 }
+//WORKS ON INCREASING THE QUANTITY OF ITEMS IN THE CART  THE CONDITION FORTHWITH CHECKS FOR THE CLASS YA FA-CHEVRON UP
+
 else if(event.target.classList.contains("fa-chevron-up")) {
-    let addAmount = event.target;
-    let id = addAmount.dataset.id;
+    let addAmount = event.target;//The chevron up button itself
+    let id = addAmount.dataset.id;//The dataset-id for the chevron up button
     let tempItem = cart.find(item => item.id===id);
     tempItem.amount = tempItem.amount+1; 
     Storage.saveCart(cart);
@@ -283,8 +285,7 @@ removeItem(id){
  //Once we have the new car items values we would want to update the cart values maze...and that is where this method comes in 
     this.setCartValues(cart);//Updated cart
     Storage.saveCart(cart);//Saving the new cart values.
-    //WE NOW RESET THE BUTTONS OF THE REMOVED ITEMS FROM CART TO NOW READ OTHER THAN.INCART
-
+    //WE NOW RESET THE BUTTONS OF THE REMOVEDe and id as the argument,The ID that we are obviously getting from the button.
     let button = this.getSingleButton(id);
 //After running this method to get the methods...
     button.disabled = false;
@@ -305,17 +306,16 @@ getSingleButton(id){
 
 class Storage {
     static saveProducts(products){
-        console.log(products);
+        // console.log(products);//proves that we pass in the products array to be manipulated in this method.
         localStorage.setItem("products",JSON.stringify(products));//serItem methods in local storage is used to store data (strings in key value pairs)
     }
 
     //Getting the product.
     //This method will require and id as the argument,The ID that we are obviously getting from the button.
     static getProduct (id){
-        console.log(id);
-        //We need to parse it since we has stored it as a string.
+        //We convert it back to an obhec via the parse JSON METHODS it since we has stored it as a string.
         let products = JSON.parse(localStorage.getItem('products'));//It will gonna require what we are getting from
-        return products.find(product => product.id===id);
+        return products.find(product => product.id === id);
         
     }
 
