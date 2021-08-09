@@ -16,7 +16,7 @@ const productsDOM = document.querySelector(".product-center");
 // CART
 // ========
 
-let cart = [];
+let cart = [];//At this point the cart is empty and we have to start populating the cart and this will only be made possible by the click button.
 
 // BUTTONS (Because we have already selected all the butons and its kinda will be recycling them when clearing the cart....)
 // ============
@@ -89,7 +89,7 @@ class UI{
 //    console.log(result);
     productsDOM.innerHTML=result;
     }
-    //METHOD 2
+    //METHOD 2(ADDS AN ITEM TO THE CART BY MANIPULATING THE BUTTONS)
 //===============================================
     getBagButtons(){
  //The spread operator converts the node list into an arrays for easier manipulation
@@ -102,6 +102,8 @@ class UI{
 
        buttons.forEach(button => {
            let id = button.dataset.id;
+
+           console.log(id);
     //Checking if the item is already in the cart and the necessary actions to be taken....
     let inCart = cart.find(item => item.id === id);//returns either true or false if the items id matches the buttons dataset id that it represents 
     if(inCart){
@@ -190,7 +192,7 @@ cartBtn.addEventListener('click',this.showCart);
 
 }
 
-// METHOD 7 (METHOD TO ADD ITEMS TO THE CART)
+// METHOD 7 (METHOD TO ADD ITEMS TO THE CART)== >> DEALS WITH THE CART IN THE DOM
 // =============================================
 
 populateCart(cart){//Looks for an argument of an array
