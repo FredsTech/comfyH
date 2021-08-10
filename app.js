@@ -271,10 +271,10 @@ clearCart(){
     let  cartItems = cart.map((item)=>{//The new value of the cart item ni id
        return ( item.id);
     });
-    cartItems.forEach(id => this.removeItem(id));
+    cartItems.forEach(id => this.removeItem(id));//Removing the Items from the cart in the local storage
 
     while (cartContent.children.length>0){
-        cartContent.removeChild(cartContent.children[0]);
+        cartContent.removeChild(cartContent.children[0]);//Removing the items from the DOM
     }
     this.hideCart();
 } 
