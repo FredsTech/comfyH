@@ -78,6 +78,7 @@ body {
 .banner-btn {
   padding: 1rem 3rem;
   text-transform: uppercase;
+  border-radius:5px;
   letter-spacing: var(--mainSpacing);
   font-size: 1rem;
   background: var(--primaryColor);
@@ -115,6 +116,9 @@ body {
 .img-container {
   position: relative;
   overflow: hidden;
+}
+.img-container img{
+  border-radius:25%;
 }
 .bag-btn {
   position: absolute;
