@@ -13,7 +13,7 @@
       "fields": {
         "title": "king panel bed",
         "price": 45000,
-        "image": { "fields": { "file": { "url": "./images/product-2.jpeg" } } }
+        "image": { "fields": { "file": { "url": "./images/king_panel_bed.jpg" } } }
       }
     },
     {
@@ -29,7 +29,7 @@
       "fields": {
         "title": "twin panel bed",
         "price": 85000,
-        "image": { "fields": { "file": { "url": "./images/product-4.jpeg" } } }
+        "image": { "fields": { "file": { "url": "./images/twin_panel_bed.jpg" } } }
       }
     },
     {
