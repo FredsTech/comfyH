@@ -1,5 +1,5 @@
 # COMFY HOUSE APPLICATION.
 
-This is an application hosting all kinds of household furnitures where one can buy remotely making your life even much easier and comfortable.
+This is a household shopping website sample where you can shop for all your household goodies.
 
 <img src="./images/homepage.png" width="300"/>
